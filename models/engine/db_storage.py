@@ -13,6 +13,12 @@ from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 
+classes = {
+    # 'User': User, 'Place': Place, 'State': State,
+    # 'City': City, 'Amenity': Amenity, 'Review': Review
+    'State': State, 'City': City
+}
+
 
 class DBStorage:
     """ Class DBStorage """
@@ -41,24 +47,20 @@ class DBStorage:
         my_models = {}
 
         if cls is None:
-            all_models = self.__session.query(
-                    # User, State, City,
-                    # Amenity, Place, Review
-                    State, City
-                ).all()
+            for a_class in classes.values():
+                a_model = self.__session.query(a_class).all()
 
-            for model in all_models:
-                key = model.__class__.__name__ + '.' + model.id
-                my_models[key] = model
+                for model in a_model:
+                    key = model.__class__.__name__ + '.' + model.id
+                    my_models[key] = model
 
-            return my_models
-
-        if cls is not None:
-            a_model = self.__session.query(cls.__name__).all()
+        else:
+            a_model = self.__session.query(cls).all()
             for model in a_model:
                 key = model.__class__.__name__ + '.' + model.id
                 my_models[key] = model
-            return my_models
+
+        return my_models
 
     def new(self, obj):
         """ Adds 'obj' object to the current database session """
