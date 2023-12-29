@@ -13,7 +13,6 @@ class FileStorage:
         if cls is not None:
             op_objs = {}
             for key, val in FileStorage.__objects.items():
-                # print(f"\nThe CLS: class -> {cls.__name__} & normal -> {cls}\n")
                 if cls.__name__ in key:
                     op_objs[key] = val
             return op_objs
@@ -60,8 +59,8 @@ class FileStorage:
     def delete(self, obj=None):
         """Deletes obj from __objects"""
         if obj:
-           key = "{}.{}".format(obj.__class__.__name__, obj.id)
-           del FileStorage.__objects[key]
+            key = "{}.{}".format(obj.__class__.__name__, obj.id)
+            del FileStorage.__objects[key]
 
         elif obj is None:
-           return
+            return
