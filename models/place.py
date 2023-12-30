@@ -60,7 +60,8 @@ class Place(BaseModel, Base):
             amts = []
             all_amenities = storage.all(Amenity).values()
             for am in all_amenities:
-                if am.id in self.amenity_ids:
+                if am.place_id == self.id
+                # if am.id in self.amenity_ids:
                     amts.append(am)
             return amts
 
