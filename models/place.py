@@ -60,7 +60,7 @@ class Place(BaseModel, Base):
             amts = []
             all_amenities = storage.all(Amenity).values()
             for am in all_amenities:
-                if am.id in self.amentity_ids:
+                if am.id in self.amenity_ids:
                     amts.append(am)
             return amts
 
@@ -70,4 +70,4 @@ class Place(BaseModel, Base):
             to the attribute amenity_ids """
             if isinstance(cls, Amenity):
                 if cls.id not in self.amenity_ids:
-                    amneity_ids.append(cls.id)
+                    self.amenity_ids.append(cls.id)
