@@ -5,17 +5,19 @@ from models.city import City
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from os import getenv
+from models import storage_type
 
 
 class State(BaseModel, Base):
     """ State class """
-    __tablename__ = 'states'
-    name = Column(String(128), nullable=False)
-
-    if getenv('HBNB_TYPE_STORAGE') == 'db':
+    if storage_type == 'db':
+        __tablename__ = 'states'
+        name = Column(String(128), nullable=False)
         cities = relationship('City', backref='state')
 
     else:
+        name = ''
+
         @property
         def cities(self):
             """ Gets state associated cities """
