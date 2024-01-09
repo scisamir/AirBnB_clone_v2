@@ -37,8 +37,6 @@ class BaseModel:
                     else:
                         self.__dict__[key] = kwargs[key]
 
-            """ time_now = datetime.strptime(datetime.now(),
-                                         "%Y-%m-%dT%H:%M:%S.%f") """
             self.created_at = kwargs.get('created_at', datetime.now())
             self.updated_at = kwargs.get('updated_at', datetime.now())
             self.id = kwargs.get('id', str(uuid.uuid4()))
@@ -61,6 +59,14 @@ class BaseModel:
         dictionary.update(self.__dict__)
         dictionary.update({'__class__':
                           (str(type(self)).split('.')[-1]).split('\'')[0]})
+
+        if isinstance(self.created_at, str):
+            self.created_at = datetime.strptime(
+                self.created_at, "%Y-%m-%dT%H:%M:%S.%f")
+        if isinstance(self.updated_at, str):
+            self.updated_at = datetime.strptime(
+                self.updated_at, "%Y-%m-%dT%H:%M:%S.%f")
+
         dictionary['created_at'] = self.created_at.isoformat()
         dictionary['updated_at'] = self.updated_at.isoformat()
 
